@@ -53,7 +53,7 @@ You may have to change the directory structure that glob looks at to generate th
 CD to the program's directory on your drive (path will likely be different for you):
 
 ```bash
-cd ingestinator
+cd /path/to/ingestinator
 ```
 
 Run the tool!
