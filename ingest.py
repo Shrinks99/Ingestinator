@@ -85,12 +85,8 @@ for shotcode in ingestcodes:
             nukeinputclean = nukeinput.replace("\\", "/")
             currentcompdir = shotsfolder + "/" + shotcode + "/comp"
             currentcompdirclean = currentcompdir.replace("\\", "/")
-            #print("\"" + nukepath + "\"" + " -ti nukestartup.py " + "\"" + nukeinputclean + "\"" + " \"" + lastframe + "\" " + " \"" + currentcolorfileclean + "\" " + "\"" + currentcompdirclean + "/slatemachine.nk" + "\"")
             subprocess.Popen("\"" + nukepath + "\"" + " -ti nukestartup.py " + "\"" + nukeinputclean + "\"" + " \"" + lastframe + "\" " + " \"" + currentcolorfileclean + "\" " + "\"" + currentcompdirclean + "/slatemachine.nk" + "\"", shell=True).wait()
             print("Finished ingest for: " + sequence)
-                #print("WARNING: no plates found for " + file)
-    # elif os.path.exists(shotsfolder + "/" + shotcode) == True:
-    #     print("WARNING: Folder for " + shotcode + " already exists, skipping")
     else:
         pass
 
