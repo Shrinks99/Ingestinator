@@ -1,0 +1,82 @@
+#! C:/Program Files/Nuke13.1v1/nuke-13.1.1.dll -nx
+#write_info Write1 file:"[python {nuke.script_directory()}]/../export/[file rootname [file tail [value root.name]]]/[file rootname [file tail [value root.name]]].%04d.exr" format:"2048 1556 1" chans:":" framerange:"1001 1001" fps:"0" colorspace:"scene_linear	scene_linear (ACES - ACEScg)" datatype:"16 bit half" transfer:"unknown" views:"main" colorManagement:"OCIO"
+version 13.1 v1
+define_window_layout_xml {<?xml version="1.0" encoding="UTF-8"?>
+<layout version="1.0">
+    <window x="1919" y="-8" w="1920" h="1017" maximized="1" screen="1">
+        <splitter orientation="1">
+            <split size="40"/>
+            <dock id="" hideTitles="1" activePageId="Toolbar.1">
+                <page id="Toolbar.1"/>
+            </dock>
+            <split size="1257" stretch="1"/>
+            <splitter orientation="2">
+                <split size="0"/>
+                <dock id=""/>
+                <split size="975"/>
+                <dock id="" activePageId="DAG.1" focus="true">
+                    <page id="DAG.1"/>
+                    <page id="Curve Editor.1"/>
+                    <page id="DopeSheet.1"/>
+                </dock>
+            </splitter>
+            <split size="615"/>
+            <dock id="" activePageId="Properties.1">
+                <page id="Properties.1"/>
+                <page id="uk.co.thefoundry.backgroundrenderview.1"/>
+            </dock>
+        </splitter>
+    </window>
+    <window x="-1" y="0" w="1919" h="1008" screen="0">
+        <splitter orientation="2">
+            <split size="1008"/>
+            <dock id="" activePageId="Viewer.1">
+                <page id="Viewer.1"/>
+            </dock>
+        </splitter>
+    </window>
+</layout>
+}
+Root {
+ inputs 0
+ name D:/Henry/Documents/GitHub/Ingestinator/shottemplate/comp/template.nk
+ project_directory "\[python \{nuke.script_directory()\}]"
+ frame 1001
+ first_frame 1001
+ last_frame 1001
+ fps 23.976
+ format "2048 1556 0 0 2048 1556 1 2K_Super_35(full-ap)"
+ proxy_type scale
+ proxy_format "1024 778 0 0 1024 778 1 1K_Super_35(full-ap)"
+ colorManagement OCIO
+ OCIO_config aces_1.2
+ defaultViewerLUT "OCIO LUTs"
+ workingSpaceLUT scene_linear
+ monitorLut ACES/Rec.709
+ monitorOutLUT "sRGB (ACES)"
+ int8Lut matte_paint
+ int16Lut texture_paint
+ logLut compositing_log
+ floatLut scene_linear
+}
+Viewer {
+ inputs 0
+ frame_range 1001-1001
+ fps 23.97602463
+ viewerProcess "sRGB (ACES)"
+ name Viewer1
+ xpos -65
+ ypos 71
+}
+Write {
+ inputs 0
+ file "\[python \{nuke.script_directory()\}]/../export/\[file rootname \[file tail \[value root.name]]]/\[file rootname \[file tail \[value root.name]]].####.exr"
+ colorspace scene_linear
+ file_type exr
+ first_part rgba
+ create_directories true
+ checkHashOnRead false
+ name Write1
+ xpos -439
+ ypos 151
+}

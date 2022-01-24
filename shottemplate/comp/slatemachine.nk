@@ -1,0 +1,1476 @@
+#! C:/Program Files/Nuke13.1v1/nuke-13.1.1.dll -nx
+version 13.1 v1
+define_window_layout_xml {<?xml version="1.0" encoding="UTF-8"?>
+<layout version="1.0">
+    <window x="1919" y="-8" w="1920" h="1017" maximized="1" screen="1">
+        <splitter orientation="1">
+            <split size="40"/>
+            <dock id="" hideTitles="1" activePageId="Toolbar.1">
+                <page id="Toolbar.1"/>
+            </dock>
+            <split size="1257" stretch="1"/>
+            <splitter orientation="2">
+                <split size="0"/>
+                <dock id=""/>
+                <split size="975"/>
+                <dock id="" activePageId="DAG.1" focus="true">
+                    <page id="DAG.1"/>
+                    <page id="Curve Editor.1"/>
+                    <page id="DopeSheet.1"/>
+                </dock>
+            </splitter>
+            <split size="615"/>
+            <dock id="" activePageId="Properties.1">
+                <page id="Properties.1"/>
+                <page id="uk.co.thefoundry.backgroundrenderview.1"/>
+            </dock>
+        </splitter>
+    </window>
+    <window x="-1" y="0" w="1919" h="1008" screen="0">
+        <splitter orientation="2">
+            <split size="1008"/>
+            <dock id="" activePageId="Viewer.1">
+                <page id="Viewer.1"/>
+            </dock>
+        </splitter>
+    </window>
+</layout>
+}
+Root {
+ inputs 0
+ name D:/Henry/Documents/GitHub/Ingestinator/shottemplate/comp/slatemachine.nk
+ project_directory "\[python \{nuke.script_directory()\}]"
+ frame 1000
+ first_frame 1000
+ last_frame 1115
+ lock_range true
+ fps 23.976
+ format "1920 1080 0 0 1920 1080 1 HD_1080"
+ proxy_type scale
+ proxy_format "1024 778 0 0 1024 778 1 1K_Super_35(full-ap)"
+ colorManagement OCIO
+ OCIO_config aces_1.2
+ defaultViewerLUT "OCIO LUTs"
+ workingSpaceLUT scene_linear
+ monitorLut ACES/sRGB
+ monitorOutLUT "sRGB (ACES)"
+ int8Lut matte_paint
+ int16Lut texture_paint
+ logLut compositing_log
+ floatLut scene_linear
+ free_type_font_path F:/Henry/Dropbox/Fonts
+}
+Read {
+ inputs 0
+ file_type exr
+ format "3888 3240 0 0 3888 3240 2 "
+ first 1001
+ last 1147
+ origfirst 1001
+ origlast 1147
+ origset true
+ colorspace "Input - RED - REDLog3G10 - REDWideGamutRGB"
+ name renderInput
+ xpos -566
+ ypos 1300
+}
+OCIOColorSpace {
+ in_colorspace scene_linear
+ out_colorspace scene_linear
+ name OCIOColorSpace3
+ xpos -566
+ ypos 2165
+}
+OCIOCDLTransform {
+ slope {0.8566 0.8566 0.8566}
+ offset {0 0 0}
+ power {0.879 0.879 0.879}
+ saturation 0.9
+ working_space raw
+ read_from_file true
+ name OCIOCDLTransform1
+ label "ADD CDL VALUES HERE!"
+ xpos -566
+ ypos 2213
+ disable true
+}
+OCIOFileTransform {
+ version 6
+ working_space raw
+ name OCIOFileTransform1
+ label "ADD LUT HERE!"
+ note_font_color 0xff
+ xpos -566
+ ypos 2298
+ disable true
+}
+OCIOColorSpace {
+ in_colorspace scene_linear
+ out_colorspace scene_linear
+ name OCIOColorSpace4
+ xpos -566
+ ypos 2354
+}
+Group {
+ name SlateMachine1
+ xpos -566
+ ypos 2446
+ addUserKnob {20 SlateMachine}
+ addUserKnob {1 showname l "Show Name"}
+ showname "SHOW NAME"
+ addUserKnob {1 completion l "Completion %"}
+ completion 0%
+ addUserKnob {1 vendorname l Vendor}
+ vendorname "VENDOR NAME"
+ addUserKnob {1 task l Task}
+ task plate
+ addUserKnob {1 notes l Notes}
+ notes " "
+ addUserKnob {26 div2 l "Time Settings"}
+ addUserKnob {3 handlestart l "Start Handles" t "This will trim the selected amount of frames off the start of the shot and update the slate counts accordingly"}
+ handlestart 16
+ addUserKnob {3 handleend l "End Handles" t "This will trim the selected amount of frames off the end of the shot and update the slate counts accordingly" -STARTLINE}
+ handleend 16
+ addUserKnob {26 handlenote l "" +STARTLINE T "The handles input removes X frames from the start & end.  Leave blank to render all frames."}
+ addUserKnob {22 setprojframes l "Set Project Frame Range" T "nuke.Root().knob('last_frame').setValue(int(nuke.toNode('renderInput').knob('last').getValue() - int(nuke.tcl(\"value this.handleend\")) - int(nuke.tcl(\"value this.handlestart\"))))" +STARTLINE}
+ addUserKnob {26 div1 l "" +STARTLINE}
+ addUserKnob {26 credit l "" +STARTLINE T "Henry Wilkinson, 2021"}
+}
+ Constant {
+  inputs 0
+  channels rgb
+  format "3840 2160 0 0 3840 2160 1 UHD_4K"
+  name Constant2
+  xpos 701
+  ypos 1784
+ }
+set Ne27eec00 [stack 0]
+ Text2 {
+  font_size_toolbar 56
+  font_width_toolbar 100
+  font_height_toolbar 100
+  message "Frame \[expr \[frame]+\[value parent.handlestart]]"
+  old_message {{70 114 97 109 101 32 49 49 51 49}
+    }
+  old_expression_markers {{6 9}
+    }
+  box {3023.5 0 3776 64}
+  xjustify right
+  yjustify bottom
+  transforms {{0 2}
+    }
+  font_size_values {{0 56 1 56 2 56 3 56 4 56 5 56 6 56 7 56 8 56 9 56 0 27}
+    }
+  cursor_position 47
+  font {{ IBM Plex Mono : Regular : IBMPlexMono-Regular.otf : 0 }}
+  font_size 56
+  center {960 540}
+  cursor_initialised true
+  autofit_bbox false
+  initial_cursor_position {{0 1080}
+    }
+  group_animations {{0} imported: 0 selected: items: "root transform/"}
+  animation_layers {{1 11 960 540 0 0 1 1 0 0 0 0}
+    }
+  name burninFrame
+  xpos -779
+  ypos 2717
+ }
+push $Ne27eec00
+ Text2 {
+  font_size_toolbar 56
+  font_width_toolbar 100
+  font_height_toolbar 100
+  message "\[date %y%m%d]"
+  old_message {{50 50 48 49 50 48}
+    }
+  old_expression_markers {{0 5}
+    }
+  box {0 0 3840 64}
+  xjustify center
+  yjustify bottom
+  transforms {{0 2}
+    }
+  font_size_values {{0 56 1 56 2 56 3 56 4 56 5 56 0 27 1 27 2 27 3 27 4 27 5 27}
+    }
+  font {{ IBM Plex Mono : Regular : IBMPlexMono-Regular.otf : 0 }}
+  font_size 56
+  center {960 540}
+  cursor_initialised true
+  autofit_bbox false
+  initial_cursor_position {{0 1080}
+    }
+  group_animations {{0} imported: 0 selected: items: "root transform/"}
+  animation_layers {{1 11 960 540 0 0 1 1 0 0 0 0}
+    }
+  name burninDate
+  xpos -786
+  ypos 2628
+ }
+push $Ne27eec00
+ Text2 {
+  font_size_toolbar 56
+  font_width_toolbar 100
+  font_height_toolbar 100
+  message "\[lrange \[split \[basename \[value renderInput.file]] .] 0 0 ]"
+  old_message {{77 72 86 95 49 48 49 95 48 50 51 95 48 48 51 48 95 65 80 49 95 86 48 48 49}
+    }
+  old_expression_markers {{0 24}
+    }
+  box {64 0 1208.5 64}
+  yjustify bottom
+  transforms {{0 2}
+    }
+  font_size_values {{0 56 1 56 2 56 3 56 4 56 5 56 6 56 7 56 8 56 9 56 10 56 11 56 12 56 13 56 14 56 15 56 16 56 17 56 18 56 19 56 20 56 21 56 22 56 23 56 24 56 0 27 1 27 2 27 3 27 4 27 5 27 6 27 7 27 8 27 9 27 10 27 11 27}
+    }
+  cursor_position 59
+  font {{ IBM Plex Mono : Regular : IBMPlexMono-Regular.otf : 0 }}
+  font_size 56
+  center {960 540}
+  cursor_initialised true
+  autofit_bbox false
+  initial_cursor_position {{0 1080}
+    }
+  group_animations {{0} imported: 0 selected: items: "root transform/"}
+  animation_layers {{1 11 960 540 0 0 1 1 0 0 0 0}
+    }
+  name burninName
+  xpos -616
+  ypos 2549
+ }
+ Merge2 {
+  inputs 2
+  name Merge16
+  xpos -616
+  ypos 2628
+ }
+ Merge2 {
+  inputs 2
+  name Merge17
+  xpos -616
+  ypos 2717
+ }
+ Dot {
+  name Dot10
+  xpos -582
+  ypos 2767
+ }
+ Input {
+  inputs 0
+  name Input1
+  xpos -454
+  ypos -838
+ }
+ TimeOffset {
+  time_offset {{-abs(parent.handlestart)}}
+  time ""
+  name TimeOffset1
+  label "Beginning handle offset"
+  xpos -454
+  ypos -761
+ }
+ Reformat {
+  format "3840 2160 0 0 3840 2160 1 UHD_4K"
+  pbb true
+  name Reformat4
+  xpos -454
+  ypos -551
+ }
+set Ne27ecc00 [stack 0]
+ Reformat {
+  format "3840 2160 0 0 3840 2160 1 UHD_4K"
+  black_outside true
+  pbb true
+  name Reformat1
+  xpos -454
+  ypos -486
+ }
+ Merge2 {
+  inputs 2
+  name Merge15
+  xpos -459
+  ypos 2764
+ }
+push $Ne27eec00
+ Text2 {
+  font_size_toolbar 78
+  font_width_toolbar 100
+  font_height_toolbar 100
+  cliptype none
+  message "\[python \{nuke.thisGroup().knob('notes').getValue()\}]"
+  old_message {{32}
+    }
+  old_expression_markers {{0 0}
+    }
+  box {560 112 2772 762}
+  transforms {{0 2}
+    }
+  font_size_values {{0 78 0 79}
+    }
+  cursor_position 52
+  font {{ IBM Plex Sans : Regular : IBMPlexSans-Regular.otf : 0 }}
+  font_size 78
+  leading 0.35
+  center {960 540}
+  cursor_initialised true
+  autofit_bbox false
+  initial_cursor_position {{815.5999756 985.2999878}
+    }
+  group_animations {{0} imported: 0 selected: items: "root transform/"}
+  animation_layers {{1 11 960 540 0 0 1 1 0 0 0 0}
+    }
+  enable_shadows true
+  shadow_softness 10
+  name notesText
+  xpos 189
+  ypos 951
+ }
+ Transform {
+  translate {162 0}
+  center {960 540}
+  name Transform9
+  xpos 189
+  ypos 975
+ }
+ Dot {
+  name Dot6
+  xpos 223
+  ypos 1017
+ }
+push $Ne27eec00
+ Text2 {
+  font_size_toolbar 86
+  font_width_toolbar 100
+  font_height_toolbar 100
+  cliptype none
+  message "Notes: "
+  old_message {{78 111 116 101 115 58 32}
+    }
+  box {402 648 692 762}
+  transforms {{0 2}
+    }
+  font_size_values {{0 86 1 86 2 86 3 86 4 86 5 86 6 86}
+    }
+  font {{ IBM Plex Sans : Medium : IBMPlexSans-Medium.otf : 0 }}
+  font_size 86
+  leading 0.75
+  center {960 540}
+  cursor_initialised true
+  autofit_bbox false
+  initial_cursor_position {{815.5999756 985.2999878}
+    }
+  group_animations {{0} imported: 0 selected: items: "root transform/"}
+  animation_layers {{1 11 960 540 0 0 1 1 0 0 0 0}
+    }
+  enable_shadows true
+  shadow_softness 10
+  name notesTextLabel
+  xpos 36
+  ypos 950
+ }
+ Merge2 {
+  inputs 2
+  name Merge14
+  xpos 36
+  ypos 1014
+ }
+push $Ne27eec00
+ Text2 {
+  font_size_toolbar 86
+  font_width_toolbar 100
+  font_height_toolbar 100
+  message "\[expression \{root.renderInput.last_frame - root.renderInput.first_frame - parent.handleend - parent.handlestart + 1\}]\n\[expr \[value root.renderInput.first]+\[value parent.handlestart]]–\[expr \[value root.renderInput.last]-\[value parent.handlestart]]\n\[date %y-%m-%d]\n\[python \{nuke.thisGroup().knob('completion').getValue()\}]\n\[python \{nuke.thisGroup().knob('vendorname').getValue()\}]\n\[python \{nuke.thisGroup().knob('task').getValue()\}]"
+  old_message {{49 49 53 10 49 48 49 55 8211 49 49 51 49 10 50 50 45 48 49 45 50 52 10 48 37 10 86 69 78 68 79 82 32 78 65 77 69 10 112 108 97 116 101}
+    }
+  old_expression_markers {{0 2 4 7 9 12 14 21 23 24 26 36 38 42}
+    }
+  box {716 787 2066 1729}
+  transforms {{0 2}
+    }
+  font_size_values {{0 86 1 86 2 86 3 86 4 86 5 86 6 86 7 86 8 86 9 86 10 86 11 86 12 86 13 86 14 86 15 86 16 86 17 86 18 86 19 86 20 86 21 86 22 86 23 86 24 86 25 86 26 86 27 86 28 86 29 86 30 86 31 86 32 86 33 86 34 86 35 86 36 86 37 86 38 86 39 86 40 86 41 86 42 86}
+    }
+  cursor_position 263
+  font {{ IBM Plex Mono : Regular : IBMPlexMono-Regular.otf : 0 }}
+  font_size 86
+  leading 0.75
+  center {960 540}
+  cursor_initialised true
+  autofit_bbox false
+  initial_cursor_position {{815.5999756 985.2999878}
+    }
+  group_animations {{0} imported: 0 selected: items: "root transform/"}
+  animation_layers {{1 11 960 540 0 0 1 1 0 0 0 0}
+    }
+  enable_shadows true
+  shadow_softness 10
+  name framesTextLabel1
+  xpos 160
+  ypos 684
+ }
+push $Ne27eec00
+ Text2 {
+  font_size_toolbar 86
+  font_width_toolbar 100
+  font_height_toolbar 100
+  message "Frame Count:\nFrame Range:\nDate:\nCompletion:\nVendor:\nTask:"
+  old_message {{70 114 97 109 101 32 67 111 117 110 116 58 10 70 114 97 109 101 32 82 97 110 103 101 58 10 68 97 116 101 58 10 67 111 109 112 108 101 116 105 111 110 58 10 86 101 110 100 111 114 58 10 84 97 115 107 58}
+    }
+  box {-70 787 662 1729}
+  xjustify right
+  transforms {{0 2}
+    }
+  font_size_values {{0 86 1 86 2 86 3 86 4 86 5 86 6 86 7 86 8 86 9 86 10 86 11 86 12 86 13 86 14 86 15 86 16 86 17 86 18 86 19 86 20 86 21 86 22 86 23 86 24 86 25 86 26 86 27 86 28 86 29 86 30 86 31 86 32 86 33 86 34 86 35 86 36 86 37 86 38 86 39 86 40 86 41 86 42 86 43 86 44 86 45 86 46 86 47 86 48 86 49 86 50 86 51 86 52 86 53 86 54 86 55 86 56 86}
+    }
+  cursor_position 12
+  font {{ IBM Plex Sans : Medium : IBMPlexSans-Medium.otf : 0 }}
+  font_size 86
+  leading 0.75
+  center {960 540}
+  cursor_initialised true
+  autofit_bbox false
+  initial_cursor_position {{815.5999756 985.2999878}
+    }
+  group_animations {{0} imported: 0 selected: items: "root transform/"}
+  animation_layers {{1 11 960 540 0 0 1 1 0 0 0 0}
+    }
+  enable_shadows true
+  shadow_softness 10
+  name framesTextLabel
+  xpos 11
+  ypos 630
+ }
+ Merge2 {
+  inputs 2
+  name Merge12
+  xpos 11
+  ypos 684
+ }
+ Transform {
+  translate {-4 -65}
+  center {960 540}
+  black_outside false
+  name Transform7
+  xpos 11
+  ypos 729
+ }
+ Dot {
+  name Dot4
+  xpos 45
+  ypos 766
+ }
+push $Ne27eec00
+ Text2 {
+  font_size_toolbar 70
+  font_width_toolbar 100
+  font_height_toolbar 100
+  message "\[lrange \[split \[basename \[value renderInput.file]] .] 0 0 ]"
+  old_expression_markers {{0 -1}
+    }
+  box {119 1761 1938 1826}
+  transforms {{0 2}
+    }
+  cursor_position 59
+  font {{ IBM Plex Mono : Regular : IBMPlexMono-Regular.otf : 0 }}
+  font_size 70
+  center {960 540}
+  cursor_initialised true
+  autofit_bbox false
+  initial_cursor_position {{815.5999756 985.2999878}
+    }
+  group_animations {{0} imported: 0 selected: items: "root transform/"}
+  animation_layers {{1 11 960 540 0 0 1 1 0 0 0 0}
+    }
+  enable_shadows true
+  shadow_softness 10
+  name shotName
+  xpos 2
+  ypos 458
+ }
+push $Ne27eec00
+ Text2 {
+  font_size_toolbar 160
+  font_width_toolbar 100
+  font_height_toolbar 100
+  cliptype none
+  message "\[python \{nuke.thisGroup().knob('showname').getValue()\}]"
+  old_message {{83 72 79 87 32 78 65 77 69}
+    }
+  old_expression_markers {{0 8}
+    }
+  box {113 1725 1951 2035}
+  transforms {{0 2}
+    }
+  font_size_values {{0 160 1 160 2 160 3 160 4 160 5 160 6 160 7 160 8 160}
+    }
+  font {{ IBM Plex Sans : SemiBold : IBMPlexSans-SemiBold.otf : 0 }}
+  font_size 160
+  center {960 540}
+  cursor_initialised true
+  autofit_bbox false
+  initial_cursor_position {{815.5999756 985.2999878}
+    }
+  group_animations {{0} imported: 0 selected: items: "root transform/"}
+  animation_layers {{1 11 960 540 0 0 1 1 0 0 0 0}
+    }
+  enable_shadows true
+  shadow_softness 10
+  name showTitle
+  xpos 2
+  ypos 339
+ }
+ Group {
+  inputs 0
+  name Rounded_rectangle1
+  xpos 520
+  ypos -108
+  addUserKnob {20 roundRect l "Rounded Rectangle"}
+  addUserKnob {41 output T Roto1.output}
+  addUserKnob {41 replace T Roto1.replace}
+  addUserKnob {26 ""}
+  addUserKnob {14 size R 0 100}
+  size {1920 135}
+  addUserKnob {7 radius R 0 150}
+  radius 16
+  addUserKnob {7 rounding}
+  rounding 1
+  addUserKnob {19 color}
+  color 1
+  addUserKnob {6 color_panelDropped l "panel dropped state" -STARTLINE +HIDDEN}
+  addUserKnob {14 Roto1_feather l feather R -100 100}
+  addUserKnob {4 Roto1_feather_type l "" -STARTLINE M {linear smooth0 smooth1 smooth}}
+  addUserKnob {6 Roto1_feather_on l on -STARTLINE}
+  Roto1_feather_on true
+  addUserKnob {20 transform l Transform}
+  addUserKnob {41 translate T Transform1.translate}
+  addUserKnob {41 rotate T Transform1.rotate}
+  addUserKnob {41 scale T Transform1.scale}
+  addUserKnob {41 skewX l "skew X" T Transform1.skewX}
+  addUserKnob {41 skewY l "skew Y" T Transform1.skewY}
+  addUserKnob {41 center T Transform1.center}
+ }
+  Input {
+   inputs 0
+   name Input1
+   xpos 172
+   ypos -114
+  }
+  Roto {
+   curves {{{v x3f99999a}
+  {f 0}
+  {n
+   {layer Root
+    {f 2098688}
+    {t
+     {=parent.Transform1.center
+      {{1 x44246000}}}
+     {=parent.Transform1.center
+      {{1 x44405800}}}    0
+     {=parent.Transform1.translate
+      {{1 0}}}
+     {=parent.Transform1.translate
+      {{1 0}}}    0 0 0
+     {=parent.Transform1.rotate
+      {{1 0}}}
+     {=parent.Transform1.scale
+      {{1 1}}}
+     {=parent.Transform1.scale 1}    1
+     {=parent.Transform1.skewX
+      {{1 0}}}
+     {=parent.Transform1.skewY
+      {{1 0}}}    0
+     {{1 0}}
+     {{1 0}}    0
+     {{1 0}}
+     {{1 1}}
+     {{1 0}}
+     {{1 0}}
+     {{1 0}}
+     {{1 0}}
+     {{1 1}}
+     {{1 0}}
+     {{1 0}}
+     {{1 0}}
+     {{1 0}}
+     {{1 1}}
+     {{1 0}}
+     {{1 0}}
+     {{1 0}}
+     {{1 0}}
+     {{1 1}}}
+    {a pt1x 0 pt1y 0 pt2x 0 pt2y 0 pt3x 0 pt3y 0 pt4x 0 pt4y 0 ptex00 0 ptex01 0 ptex02 0 ptex03 0 ptex10 0 ptex11 0 ptex12 0 ptex13 0 ptex20 0 ptex21 0 ptex22 0 ptex23 0 ptex30 0 ptex31 0 ptex32 0 ptex33 0 ptof1x 0 ptof1y 0 ptof2x 0 ptof2y 0 ptof3x 0 ptof3y 0 ptof4x 0 ptof4y 0 pterr 0 ptrefset 0 ptmot x40800000 ptref 0}
+    {curvegroup BezierCusped1 1536 bezier
+     {{cc
+       {f 8192}
+       {px 1
+        {{=0 0}
+	 {=0 0}}
+        {{=width/2-parent.size.w/2 x43ecffff}
+	 {=height/2+parent.size.h/2-parent.radius x4496a000}}
+        {{=0 0}
+	 {=parent.radius*.552*rounding 0}}
+        {{=-parent.radius*.552*rounding 0}
+	 {=0 0}}
+        {{=width/2-parent.size.w/2+parent.radius x44154000}
+	 {=height/2+parent.size.h/2 x44a60000}}
+        {{=0 0}
+	 {=0 0}}
+        {{=0 0}
+	 {=0 0}}
+        {{=width/2+parent.size.w/2-parent.radius x44b56000}
+	 {=height/2+parent.size.h/2 x44a60000}}
+        {{=parent.radius*.552*rounding 0}
+	 {=0 0}}
+        {{=0 0}
+	 {=parent.radius*.552*rounding 0}}
+        {{=width/2+parent.size.w/2 x44c4c000}
+	 {=height/2+parent.size.h/2-parent.radius x4496a000}}
+        {{=0 0}
+	 {=0 0}}
+        {{=0 0}
+	 {=0 0}}
+        {{=width/2+parent.size.w/2 x44c4c000}
+	 {=height/2-parent.size.h/2+parent.radius x43af8000}}
+        {{=0 0}
+	 {=-parent.radius*.552*rounding 0}}
+        {{=parent.radius*.552*rounding 0}
+	 {=0 0}}
+        {{=width/2+parent.size.w/2-parent.radius x44b56000}
+	 {=height/2-parent.size.h/2 x43640000}}
+        {{=0 0}
+	 {=0 0}}
+        {{=0 0}
+	 {=0 0}}
+        {{=width/2-parent.size.w/2+parent.radius x44154000}
+	 {=height/2-parent.size.h/2 x43640000}}
+        {{=-parent.radius*.552*rounding 0}
+	 {=0 0}}
+        {{=0 0}
+	 {=-parent.radius*.552*rounding 0}}
+        {{=width/2-parent.size.w/2 x43ed0000}
+	 {=height/2-parent.size.h/2+parent.radius x43af8000}}
+        {{=0 0}
+	 {=0 0}}}}
+      {cc
+       {f 8192}
+       {px 1
+        {{=0 0}
+	 {=0 0}}
+        {{=0 0}
+	 {=0 0}}
+        {{=0 0}
+	 {=parent.radius*.552*rounding 0}}
+        {{=-parent.radius*.552*rounding 0}
+	 {=0 0}}
+        {{=0 0}
+	 {=0 0}}
+        {{=0 0}
+	 {=0 0}}
+        {{=0 0}
+	 {=0 0}}
+        {{=0 0}
+	 {=0 0}}
+        {{=parent.radius*.552*rounding 0}
+	 {=0 0}}
+        {{=0 0}
+	 {=parent.radius*.552*rounding 0}}
+        {{=0 0}
+	 {=0 0}}
+        {{=0 0}
+	 {=0 0}}
+        {{=0 0}
+	 {=0 0}}
+        {{=0 0}
+	 {=0 0}}
+        {{=0 0}
+	 {=-parent.radius*.552*rounding 0}}
+        {{=parent.radius*.552*rounding 0}
+	 {=0 0}}
+        {{=0 0}
+	 {=0 0}}
+        {{=0 0}
+	 {=0 0}}
+        {{=0 0}
+	 {=0 0}}
+        {{=0 0}
+	 {=0 0}}
+        {{=-parent.radius*.552*rounding xc289c28f}
+	 {=0 0}}
+        {{=0 0}
+	 {=-parent.radius*.552*rounding 0}}
+        {{=0 0}
+	 {=0 0}}
+        {{=0 0}
+	 {=0 0}}}}}
+     {t
+      {{1 x446d0000}}
+      {{1 x44258000}}
+      {{1 0}}
+      {{1 0}}
+      {{1 0}}
+      {{1 0}}
+      {{1 0}}
+      {{1 0}}
+      {{1 0}}
+      {{1 1}}     1
+      {{1 1}}
+      {{1 0}}
+      {{1 0}}
+      {{1 0}}
+      {{1 0}}
+      {{1 0}}
+      {{1 0}}
+      {{1 0}}
+      {{1 1}}
+      {{1 0}}
+      {{1 0}}
+      {{1 0}}
+      {{1 0}}
+      {{1 1}}
+      {{1 0}}
+      {{1 0}}
+      {{1 0}}
+      {{1 0}}
+      {{1 1}}
+      {{1 0}}
+      {{1 0}}
+      {{1 0}}
+      {{1 0}}
+      {{1 1}}}
+     {a r
+      {=parent.color.r 1}     g
+      {=parent.color.g 1}     b
+      {=parent.color.b 1}     a
+      {=parent.color.a 1}     fo
+      {=parent.Roto1_feather_on 1}     fx
+      {=parent.Roto1_feather.w 0}     fy
+      {=parent.Roto1_feather.h 0}     ft
+      {=parent.Roto1_feather_type 0}     osw x41200000 osf 0 str 1 spx x44800000 spy x44428000 sb 1 tt x40a00000 mbsot x40400000}}}}}}
+   toolbox {selectAll {
+  { selectAll str 1 ssx 1 ssy 1 sf 1 }
+  { selectCurves str 1 ssx 1 ssy 1 sf 1 }
+  { createBezier str 1 ssx 1 ssy 1 sf 1 sb 1 tt 4 }
+  { createBezierCusped str 1 ssx 1 ssy 1 sf 1 sb 1 tt 5 }
+  { createBSpline str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { createEllipse str 1 ssx 1 ssy 1 sf 1 sb 1 tt 7 }
+  { createRectangle str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { createRectangleCusped str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { brush str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { eraser src 2 str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { clone src 1 str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { reveal src 3 str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { dodge src 1 str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { burn src 1 str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { blur src 1 str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { sharpen src 1 str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { smear src 1 str 1 ssx 1 ssy 1 sf 1 sb 1 }
+} }
+   toolbar_brush_hardness 0.200000003
+   toolbar_source_transform_scale {1 1}
+   toolbar_source_transform_center {1024 778}
+   color {{parent.color.r 1} {parent.color.g} {parent.color.b} {parent.color.a}}
+   colorOverlay {0 0 0 0}
+   lifetime_type "all frames"
+   locked true
+   motionblur_shutter_offset_type custom
+   feather {{parent.Roto1_feather.w 0} {parent.Roto1_feather.h}}
+   feather_on {{parent.Roto1_feather_on 1}}
+   feather_type {{parent.Roto1_feather_type 0}}
+   source_black_outside true
+   name Roto1
+   xpos 172
+   ypos -74
+  }
+set N87bd3c00 [stack 0]
+  Output {
+   name Output1
+   xpos 172
+   ypos 26
+  }
+push $N87bd3c00
+  Viewer {
+   frame_range 1-100
+   name Viewer1
+   xpos 291
+   ypos -12
+  }
+  Transform {
+   inputs 0
+   translate {0 -472}
+   center {960 540}
+   name Transform1
+   xpos 360
+   ypos -81
+  }
+ end_group
+ ColorBars {
+  inputs 0
+  format "1920 1080 0 0 1920 1080 1 HD_1080"
+  name ColorBars2
+  xpos 357
+  ypos -318
+ }
+ Expression {
+  temp_name0 v
+  temp_expr0 int(x/width*11)/10
+  temp_name1 size
+  temp_expr1 "height  / 16"
+  expr0 y<height-size?v:r
+  expr1 y<height-size?v:g
+  expr2 y<height-size?v:b
+  expr3 1
+  name bw_chips1
+  xpos 357
+  ypos -233
+ }
+ Crop {
+  box {{curve} {height-(height/8)} {width} {height}}
+  reformat true
+  name Crop_to_size1
+  xpos 357
+  ypos -170
+ }
+ Merge2 {
+  inputs 2
+  operation mask
+  name Merge7
+  xpos 357
+  ypos -108
+ }
+ Transform {
+  translate {{parent.Transform1.translate.x} {"parent.Transform1.translate.y- 150"}}
+  scale {{parent.Transform1.scale}}
+  center {{parent.Transform1.center.x} {parent.Transform1.center.y}}
+  name Transform4
+  xpos 357
+  ypos -10
+ }
+push 0
+ DropShadow {
+  inputs 2
+  name DropShadow2
+  note_font Verdana
+  xpos 357
+  ypos 58
+  color {0 0 0}
+  dropshadow_angle 270
+  softness 20
+ }
+ Dot {
+  name Dot5
+  xpos 391
+  ypos 93
+ }
+push $Ne27ecc00
+ Dot {
+  name Dot3
+  xpos 53
+  ypos -542
+ }
+ Shuffle2 {
+  fromInput1 {{0} B}
+  fromInput2 {{0} B}
+  mappings "4 rgba.red 0 0 rgba.red 0 0 rgba.green 0 1 rgba.green 0 1 rgba.blue 0 2 rgba.blue 0 2 white -1 -1 rgba.alpha 0 3"
+  name Shuffle1
+  xpos 19
+  ypos -498
+ }
+ FrameHold {
+  firstFrame 1
+  name FrameHold1
+  xpos 19
+  ypos -444
+ }
+set N87b30100 [stack 0]
+ Reformat {
+  scale 0.335
+  name slatePreviewReformat
+  xpos 19
+  ypos -366
+ }
+set N87ebd400 [stack 0]
+ Group {
+  name Rounded_rectangle2
+  xpos 152
+  ypos -296
+  addUserKnob {20 roundRect l "Rounded Rectangle"}
+  addUserKnob {41 output T Roto1.output}
+  addUserKnob {41 replace T Roto1.replace}
+  addUserKnob {26 ""}
+  addUserKnob {14 size R 0 100}
+  size {{"\[python nuke.value(\\\"slatePreviewReformat.bbox.w\\\")]"} {"\[python int(nuke.value(\\\"slatePreviewReformat.bbox.h\\\"))\\ -\\ 4]"}}
+  addUserKnob {7 radius R 0 150}
+  radius 16
+  addUserKnob {7 rounding}
+  rounding 1
+  addUserKnob {19 color}
+  color 1
+  addUserKnob {6 color_panelDropped l "panel dropped state" -STARTLINE +HIDDEN}
+  addUserKnob {14 Roto1_feather l feather R -100 100}
+  addUserKnob {4 Roto1_feather_type l "" -STARTLINE M {linear smooth0 smooth1 smooth}}
+  addUserKnob {6 Roto1_feather_on l on -STARTLINE}
+  Roto1_feather_on true
+  addUserKnob {20 transform l Transform}
+  addUserKnob {41 translate T Transform1.translate}
+  addUserKnob {41 rotate T Transform1.rotate}
+  addUserKnob {41 scale T Transform1.scale}
+  addUserKnob {41 skewX l "skew X" T Transform1.skewX}
+  addUserKnob {41 skewY l "skew Y" T Transform1.skewY}
+  addUserKnob {41 center T Transform1.center}
+ }
+  Input {
+   inputs 0
+   name Input1
+   xpos 172
+   ypos -114
+  }
+  Roto {
+   inputs 0
+   replace true
+   curves {{{v x3f99999a}
+  {f 0}
+  {n
+   {layer Root
+    {f 2098688}
+    {t
+     {=parent.Transform1.center
+      {{1 x44246000}}}
+     {=parent.Transform1.center
+      {{1 x44405800}}}    0
+     {=parent.Transform1.translate
+      {{1 0}}}
+     {=parent.Transform1.translate
+      {{1 0}}}    0 0 0
+     {=parent.Transform1.rotate
+      {{1 0}}}
+     {=parent.Transform1.scale
+      {{1 1}}}
+     {=parent.Transform1.scale 1}    1
+     {=parent.Transform1.skewX
+      {{1 0}}}
+     {=parent.Transform1.skewY
+      {{1 0}}}    0
+     {{1 0}}
+     {{1 0}}    0
+     {{1 0}}
+     {{1 1}}
+     {{1 0}}
+     {{1 0}}
+     {{1 0}}
+     {{1 0}}
+     {{1 1}}
+     {{1 0}}
+     {{1 0}}
+     {{1 0}}
+     {{1 0}}
+     {{1 1}}
+     {{1 0}}
+     {{1 0}}
+     {{1 0}}
+     {{1 0}}
+     {{1 1}}}
+    {a pt1x 0 pt1y 0 pt2x 0 pt2y 0 pt3x 0 pt3y 0 pt4x 0 pt4y 0 ptex00 0 ptex01 0 ptex02 0 ptex03 0 ptex10 0 ptex11 0 ptex12 0 ptex13 0 ptex20 0 ptex21 0 ptex22 0 ptex23 0 ptex30 0 ptex31 0 ptex32 0 ptex33 0 ptof1x 0 ptof1y 0 ptof2x 0 ptof2y 0 ptof3x 0 ptof3y 0 ptof4x 0 ptof4y 0 pterr 0 ptrefset 0 ptmot x40800000 ptref 0}
+    {curvegroup BezierCusped1 1536 bezier
+     {{cc
+       {f 8192}
+       {px 1
+        {{=0 0}
+	 {=0 0}}
+        {{=width/2-parent.size.w/2 x43ecffff}
+	 {=height/2+parent.size.h/2-parent.radius x4496a000}}
+        {{=0 0}
+	 {=parent.radius*.552*rounding 0}}
+        {{=-parent.radius*.552*rounding 0}
+	 {=0 0}}
+        {{=width/2-parent.size.w/2+parent.radius x44154000}
+	 {=height/2+parent.size.h/2 x44a60000}}
+        {{=0 0}
+	 {=0 0}}
+        {{=0 0}
+	 {=0 0}}
+        {{=width/2+parent.size.w/2-parent.radius x44b56000}
+	 {=height/2+parent.size.h/2 x44a60000}}
+        {{=parent.radius*.552*rounding 0}
+	 {=0 0}}
+        {{=0 0}
+	 {=parent.radius*.552*rounding 0}}
+        {{=width/2+parent.size.w/2 x44c4c000}
+	 {=height/2+parent.size.h/2-parent.radius x4496a000}}
+        {{=0 0}
+	 {=0 0}}
+        {{=0 0}
+	 {=0 0}}
+        {{=width/2+parent.size.w/2 x44c4c000}
+	 {=height/2-parent.size.h/2+parent.radius x43af8000}}
+        {{=0 0}
+	 {=-parent.radius*.552*rounding 0}}
+        {{=parent.radius*.552*rounding 0}
+	 {=0 0}}
+        {{=width/2+parent.size.w/2-parent.radius x44b56000}
+	 {=height/2-parent.size.h/2 x43640000}}
+        {{=0 0}
+	 {=0 0}}
+        {{=0 0}
+	 {=0 0}}
+        {{=width/2-parent.size.w/2+parent.radius x44154000}
+	 {=height/2-parent.size.h/2 x43640000}}
+        {{=-parent.radius*.552*rounding 0}
+	 {=0 0}}
+        {{=0 0}
+	 {=-parent.radius*.552*rounding 0}}
+        {{=width/2-parent.size.w/2 x43ed0000}
+	 {=height/2-parent.size.h/2+parent.radius x43af8000}}
+        {{=0 0}
+	 {=0 0}}}}
+      {cc
+       {f 8192}
+       {px 1
+        {{=0 0}
+	 {=0 0}}
+        {{=0 0}
+	 {=0 0}}
+        {{=0 0}
+	 {=parent.radius*.552*rounding 0}}
+        {{=-parent.radius*.552*rounding 0}
+	 {=0 0}}
+        {{=0 0}
+	 {=0 0}}
+        {{=0 0}
+	 {=0 0}}
+        {{=0 0}
+	 {=0 0}}
+        {{=0 0}
+	 {=0 0}}
+        {{=parent.radius*.552*rounding 0}
+	 {=0 0}}
+        {{=0 0}
+	 {=parent.radius*.552*rounding 0}}
+        {{=0 0}
+	 {=0 0}}
+        {{=0 0}
+	 {=0 0}}
+        {{=0 0}
+	 {=0 0}}
+        {{=0 0}
+	 {=0 0}}
+        {{=0 0}
+	 {=-parent.radius*.552*rounding 0}}
+        {{=parent.radius*.552*rounding 0}
+	 {=0 0}}
+        {{=0 0}
+	 {=0 0}}
+        {{=0 0}
+	 {=0 0}}
+        {{=0 0}
+	 {=0 0}}
+        {{=0 0}
+	 {=0 0}}
+        {{=-parent.radius*.552*rounding xc289c28f}
+	 {=0 0}}
+        {{=0 0}
+	 {=-parent.radius*.552*rounding 0}}
+        {{=0 0}
+	 {=0 0}}
+        {{=0 0}
+	 {=0 0}}}}}
+     {t
+      {{1 x446d0000}}
+      {{1 x44258000}}
+      {{1 0}}
+      {{1 0}}
+      {{1 0}}
+      {{1 0}}
+      {{1 0}}
+      {{1 0}}
+      {{1 0}}
+      {{1 1}}     1
+      {{1 1}}
+      {{1 0}}
+      {{1 0}}
+      {{1 0}}
+      {{1 0}}
+      {{1 0}}
+      {{1 0}}
+      {{1 0}}
+      {{1 1}}
+      {{1 0}}
+      {{1 0}}
+      {{1 0}}
+      {{1 0}}
+      {{1 1}}
+      {{1 0}}
+      {{1 0}}
+      {{1 0}}
+      {{1 0}}
+      {{1 1}}
+      {{1 0}}
+      {{1 0}}
+      {{1 0}}
+      {{1 0}}
+      {{1 1}}}
+     {a r
+      {=parent.color.r 1}     g
+      {=parent.color.g 1}     b
+      {=parent.color.b 1}     a
+      {=parent.color.a 1}     fo
+      {=parent.Roto1_feather_on 1}     fx
+      {=parent.Roto1_feather.w 0}     fy
+      {=parent.Roto1_feather.h 0}     ft
+      {=parent.Roto1_feather_type 0}     osw x41200000 osf 0 str 1 spx x44800000 spy x44428000 sb 1 tt x40a00000 mbsot x40400000}}}}}}
+   toolbox {selectAll {
+  { selectAll str 1 ssx 1 ssy 1 sf 1 }
+  { selectCurves str 1 ssx 1 ssy 1 sf 1 }
+  { createBezier str 1 ssx 1 ssy 1 sf 1 sb 1 tt 4 }
+  { createBezierCusped str 1 ssx 1 ssy 1 sf 1 sb 1 tt 5 }
+  { createBSpline str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { createEllipse str 1 ssx 1 ssy 1 sf 1 sb 1 tt 7 }
+  { createRectangle str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { createRectangleCusped str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { brush str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { eraser src 2 str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { clone src 1 str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { reveal src 3 str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { dodge src 1 str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { burn src 1 str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { blur src 1 str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { sharpen src 1 str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { smear src 1 str 1 ssx 1 ssy 1 sf 1 sb 1 }
+} }
+   toolbar_brush_hardness 0.200000003
+   toolbar_source_transform_scale {1 1}
+   toolbar_source_transform_center {1024 778}
+   color {{parent.color.r 1} {parent.color.g} {parent.color.b} {parent.color.a}}
+   colorOverlay {0 0 0 0}
+   lifetime_type "all frames"
+   locked true
+   motionblur_shutter_offset_type custom
+   feather {{parent.Roto1_feather.w 0} {parent.Roto1_feather.h}}
+   feather_on {{parent.Roto1_feather_on 1}}
+   feather_type {{parent.Roto1_feather_type 0}}
+   source_black_outside true
+   name Roto1
+   xpos 172
+   ypos -74
+  }
+set N87ebc800 [stack 0]
+  Output {
+   name Output1
+   xpos 172
+   ypos 26
+  }
+push $N87ebc800
+  Viewer {
+   frame_range 1-100
+   name Viewer1
+   xpos 291
+   ypos -12
+  }
+  Transform {
+   inputs 0
+   center {960 540}
+   name Transform1
+   xpos 360
+   ypos -81
+  }
+ end_group
+push $N87ebd400
+ Merge2 {
+  inputs 2
+  operation mask
+  name Merge8
+  xpos 19
+  ypos -296
+ }
+ Transform {
+  translate {1920 1080}
+  scale 0.8
+  center {960 540}
+  name Transform1
+  xpos 19
+  ypos -188
+ }
+push 0
+ DropShadow {
+  inputs 2
+  name DropShadow1
+  note_font Verdana
+  xpos 19
+  ypos -74
+  color {0 0 0}
+  dropshadow_angle 270
+  softness 20
+ }
+ Dot {
+  name Dot7
+  xpos 53
+  ypos 8
+ }
+push $N87b30100
+ Dot {
+  name Dot1
+  xpos -57
+  ypos -435
+ }
+ Reformat {
+  format "3840 2160 0 0 3840 2160 1 UHD_4K"
+  scale 0.335
+  name Reformat3
+  xpos -91
+  ypos -397
+ }
+ Grade {
+  white 4
+  name Grade1
+  xpos -91
+  ypos -323
+ }
+ Clamp {
+  maximum 0.5
+  name Clamp1
+  xpos -91
+  ypos -274
+ }
+ Blur {
+  size 200
+  name Blur1
+  xpos -91
+  ypos -233
+ }
+ Dot {
+  name Dot2
+  xpos -57
+  ypos -159
+ }
+ Constant {
+  inputs 0
+  color {0.002167 0.002167 0.007667 1}
+  color_panelDropped true
+  format "3840 2160 0 0 3840 2160 1 UHD_4K"
+  name Constant1
+  xpos -246
+  ypos -445
+ }
+ Merge2 {
+  inputs 2
+  bbox B
+  mix 0.5
+  name Merge1
+  xpos -246
+  ypos -162
+ }
+ Merge2 {
+  inputs 2
+  bbox B
+  name Merge2
+  xpos -246
+  ypos 5
+ }
+ Merge2 {
+  inputs 2
+  bbox B
+  name Merge6
+  xpos -246
+  ypos 90
+ }
+ Merge2 {
+  inputs 2
+  bbox B
+  name Merge9
+  xpos -246
+  ypos 339
+ }
+ Merge2 {
+  inputs 2
+  bbox B
+  name Merge10
+  xpos -246
+  ypos 458
+ }
+ Merge2 {
+  inputs 2
+  bbox B
+  name Merge11
+  xpos -246
+  ypos 763
+ }
+ Merge2 {
+  inputs 2
+  bbox B
+  name Merge13
+  xpos -246
+  ypos 1014
+ }
+ Dot {
+  name Dot11
+  xpos -213
+  ypos 2588
+ }
+ Dot {
+  name Dot9
+  xpos -212
+  ypos 2994
+ }
+ Switch {
+  inputs 2
+  which {{curve x1000 0 1}}
+  name Switch1
+  xpos -459
+  ypos 2991
+ }
+ Reformat {
+  format "3840 2160 0 0 3840 2160 1 UHD_4K"
+  black_outside true
+  name Reformat5
+  xpos -459
+  ypos 3040
+ }
+set N87d06000 [stack 0]
+ Shuffle2 {
+  fromInput1 {{0} B}
+  fromInput2 {{0} B}
+  mappings "4 rgba.red 0 0 rgba.red 0 0 rgba.green 0 1 rgba.green 0 1 rgba.blue 0 2 rgba.blue 0 2 white -1 -1 rgba.alpha 0 3"
+  name Shuffle2
+  xpos -459
+  ypos 3102
+ }
+ Output {
+  name Output1
+  xpos -459
+  ypos 3164
+ }
+ Reformat {
+  inputs 0
+  black_outside true
+  pbb true
+  name Reformat2
+  xpos -302
+  ypos -622
+ }
+push $N87d06000
+ Viewer {
+  frame_range 1000-1058
+  fps 23.97602463
+  viewerProcess "sRGB (ACES)"
+  name Viewer1
+  xpos -313
+  ypos -297
+ }
+end_group
+set Ne2844100 [stack 0]
+Viewer {
+ frame_range 1000-1115
+ fps 23.97602463
+ viewerProcess "sRGB (ACES)"
+ translate {-1.312000036 0.03200000525}
+ rotate -360
+ name Viewer1
+ xpos -251
+ ypos 2310
+}
+push $Ne2844100
+Reformat {
+ name Reformat14
+ label 1080p
+ xpos -695
+ ypos 2539
+ disable true
+}
+Write {
+ file "\[python \{nuke.script_directory()\}]/../export/\[lrange \[split \[basename \[value renderInput.file]] .] 0 0 ].mov"
+ colorspace "Utility - Rec.709 - Camera"
+ file_type mov
+ mov64_format "mov (QuickTime / MOV)"
+ mov64_codec AVdn
+ mov64_dnxhd_codec_profile "DNxHD 422 8-bit 36Mbit"
+ mov_h264_codec_profile "High 4:2:0 8-bit"
+ mov64_pixel_format {{0} "yuv420p\tYCbCr 4:2:0 8-bit"}
+ mov64_quality High
+ mov64_fast_start true
+ mov64_write_timecode true
+ mov64_gop_size 12
+ mov64_b_frames 0
+ mov64_bitrate 20000
+ mov64_bitrate_tolerance 4000000
+ mov64_quality_min 1
+ mov64_quality_max 3
+ first 1000
+ last {{"root.renderInput.last_frame - root.SlateMachine1.handleend - root.SlateMachine1.handlestart"}}
+ use_limit true
+ checkHashOnRead false
+ version 31
+ in_colorspace scene_linear
+ out_colorspace scene_linear
+ name slatemachineOutput
+ label "DNX Render"
+ xpos -695
+ ypos 2647
+ disable true
+}
+push $Ne2844100
+Reformat {
+ name Reformat4
+ label 1080p
+ xpos -877
+ ypos 2540
+}
+Write {
+ file "\[python \{nuke.script_directory()\}]/../export/\[string range \[lrange \[split \[basename \[value renderInput.file]] .] 0 0 ] 0 19 ]_INH_plate_v900.mov"
+ colorspace "Utility - Rec.709 - Camera"
+ file_type mov
+ mov64_format "mov (QuickTime / MOV)"
+ mov64_codec AVdn
+ mov64_dnxhd_codec_profile "DNxHD 422 8-bit 36Mbit"
+ mov_h264_codec_profile "High 4:2:0 8-bit"
+ mov64_pixel_format {{0} "yuv420p\tYCbCr 4:2:0 8-bit"}
+ mov64_quality High
+ mov64_fast_start true
+ mov64_write_timecode true
+ mov64_gop_size 12
+ mov64_b_frames 0
+ mov64_bitrate 20000
+ mov64_bitrate_tolerance 4000000
+ mov64_quality_min 1
+ mov64_quality_max 3
+ first 1000
+ last {{"root.renderInput.last_frame - root.SlateMachine1.handleend - root.SlateMachine1.handlestart"}}
+ use_limit true
+ checkHashOnRead false
+ version 33
+ in_colorspace scene_linear
+ out_colorspace scene_linear
+ name slatemachineOutputPlate
+ label "Plate Render"
+ xpos -877
+ ypos 2654
+}
+push $Ne2844100
+Write {
+ file "\[python \{nuke.script_directory()\}]/../export/\[lrange \[split \[basename \[value renderInput.file]] .] 0 0 ].mov"
+ colorspace "Utility - Rec.709 - Camera"
+ file_type mov
+ mov64_format "mov (QuickTime / MOV)"
+ mov64_codec appr
+ mov64_dnxhd_codec_profile "DNxHD 422 8-bit 36Mbit"
+ mov_h264_codec_profile "High 4:2:0 8-bit"
+ mov64_pixel_format {{0} "yuv420p\tYCbCr 4:2:0 8-bit"}
+ mov64_quality High
+ mov64_fast_start true
+ mov64_write_timecode true
+ mov64_gop_size 12
+ mov64_b_frames 0
+ mov64_bitrate 20000
+ mov64_bitrate_tolerance 4000000
+ mov64_quality_min 1
+ mov64_quality_max 3
+ first 1000
+ last {{"root.renderInput.last_frame - root.SlateMachine1.handleend - root.SlateMachine1.handlestart"}}
+ use_limit true
+ checkHashOnRead false
+ version 31
+ in_colorspace scene_linear
+ out_colorspace scene_linear
+ name slatemachineOutput1
+ label "Prores Render"
+ xpos -477
+ ypos 2643
+ disable true
+}
